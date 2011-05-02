@@ -7,9 +7,10 @@ import zope.app.component
 import zope.component.testing
 from zope.configuration import xmlconfig
 import Products.Five
+import plone.autoform
 
 from plone.supermodel import model
-from plone import autoform
+from plone.autoform import form
 
 from plone.supermodel.interfaces import FILENAME_KEY, SCHEMA_NAME_KEY
 from plone.autoform.interfaces import OMITTED_KEY, WIDGETS_KEY, MODES_KEY, ORDER_KEY
@@ -24,7 +25,7 @@ class TestAutoformDirectives(unittest.TestCase):
         xmlconfig.XMLConfig('meta.zcml', zope.component)()
         xmlconfig.XMLConfig('meta.zcml', zope.app.component)()
         xmlconfig.XMLConfig('configure.zcml', Products.Five)()
-        xmlconfig.XMLConfig('configure.zcml', autoform)()
+        xmlconfig.XMLConfig('configure.zcml', plone.autoform)()
 
     def tearDown(self):
         zope.component.testing.tearDown()
@@ -33,16 +34,16 @@ class TestAutoformDirectives(unittest.TestCase):
         
         class IDummy(model.Schema):
             
-            autoform.omit('foo', 'bar')
-            autoform.omit(model.Schema, 'qux')
-            autoform.no_omit(model.Schema, 'bar')
-            autoform.widget(foo='some.dummy.Widget', baz='other.Widget')
-            autoform.mode(bar='hidden')
-            autoform.mode(model.Schema, bar='input')
-            autoform.order_before(baz='title')
-            autoform.order_after(qux='title')
-            autoform.read_permission(foo='zope2.View')
-            autoform.write_permission(foo='cmf.ModifyPortalContent')
+            form.omit('foo', 'bar')
+            form.omit(model.Schema, 'qux')
+            form.no_omit(model.Schema, 'bar')
+            form.widget(foo='some.dummy.Widget', baz='other.Widget')
+            form.mode(bar='hidden')
+            form.mode(model.Schema, bar='input')
+            form.order_before(baz='title')
+            form.order_after(qux='title')
+            form.read_permission(foo='zope2.View')
+            form.write_permission(foo='cmf.ModifyPortalContent')
             
             foo = zope.schema.TextLine(title=u"Foo")
             bar = zope.schema.TextLine(title=u"Bar")
@@ -72,7 +73,7 @@ class TestAutoformDirectives(unittest.TestCase):
         
         class IDummy(model.Schema):
             
-            autoform.widget(foo=DummyWidget)
+            form.widget(foo=DummyWidget)
             
             foo = zope.schema.TextLine(title=u"Foo")
             bar = zope.schema.TextLine(title=u"Bar")
@@ -85,20 +86,20 @@ class TestAutoformDirectives(unittest.TestCase):
         
         class IDummy(model.Schema):
             
-            autoform.omit('foo')
-            autoform.omit('bar')
-            autoform.widget(foo='some.dummy.Widget')
-            autoform.widget(baz='other.Widget')
-            autoform.mode(bar='hidden')
-            autoform.mode(foo='display')
-            autoform.order_before(baz='title')
-            autoform.order_after(baz='qux')
-            autoform.order_after(qux='bar')
-            autoform.order_before(foo='body')
-            autoform.read_permission(foo='zope2.View', bar='zope2.View')
-            autoform.read_permission(baz='random.Permission')
-            autoform.write_permission(foo='cmf.ModifyPortalContent')
-            autoform.write_permission(baz='another.Permission')
+            form.omit('foo')
+            form.omit('bar')
+            form.widget(foo='some.dummy.Widget')
+            form.widget(baz='other.Widget')
+            form.mode(bar='hidden')
+            form.mode(foo='display')
+            form.order_before(baz='title')
+            form.order_after(baz='qux')
+            form.order_after(qux='bar')
+            form.order_before(foo='body')
+            form.read_permission(foo='zope2.View', bar='zope2.View')
+            form.read_permission(baz='random.Permission')
+            form.write_permission(foo='cmf.ModifyPortalContent')
+            form.write_permission(baz='another.Permission')
             
             foo = zope.schema.TextLine(title=u"Foo")
             bar = zope.schema.TextLine(title=u"Bar")
@@ -128,12 +129,12 @@ class TestAutoformDirectives(unittest.TestCase):
         
         def bar():
             class IBar(model.Schema):
-                autoform.order_before(ber='*')
+                form.order_before(ber='*')
                 bar = zope.schema.TextLine()
         
         def baz():
             class IBaz(model.Schema):
-                autoform.omit('buz')
+                form.omit('buz')
                 baz = zope.schema.TextLine()
             
         self.assertRaises(ValueError, bar)
@@ -145,7 +146,7 @@ class TestAutoformDirectives(unittest.TestCase):
             foo = zope.schema.TextLine()
         
         class IBar(IFoo):
-            autoform.order_after(foo='bar')
+            form.order_after(foo='bar')
             bar = zope.schema.TextLine()
                 
         self.assertEquals([('foo', 'after', 'bar'),], IBar.queryTaggedValue(ORDER_KEY))

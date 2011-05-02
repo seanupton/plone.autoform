@@ -4,6 +4,16 @@ from plone.z3cform.fieldsets.extensible import ExtensibleForm
 
 from plone.autoform.interfaces import IAutoExtensibleForm
 from plone.autoform.base import AutoFields
+from plone.autoform.directives import (
+    omit,
+    no_omit,
+    mode,
+    widget,
+    order_before,
+    order_after,
+    read_permission,
+    write_permission,
+    )
 
 _marker = object()
 
