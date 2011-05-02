@@ -15,4 +15,34 @@
         name="plone.autoform.security"
         />
 
+    <adapter
+        factory=".directives.OmittedPlugin"
+        name="plone.autoform.omit"
+        />
+
+    <adapter
+        factory=".directives.ModesPlugin"
+        name="plone.autoform.mode"
+        />
+
+    <adapter
+        factory=".directives.WidgetsPlugin"
+        name="plone.autoform.widget"
+        />
+
+    <adapter
+        factory=".directives.OrderPlugin"
+        name="plone.autoform.order"
+        />
+
+    <adapter
+        factory=".directives.ReadPermissionsPlugin"
+        name="plone.autoform.read_permission"
+        />
+
+    <adapter
+        factory=".directives.WritePermissionsPlugin"
+        name="plone.autoform.write_permission"
+        />
+
 </configure>
