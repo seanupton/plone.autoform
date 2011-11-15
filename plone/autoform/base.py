@@ -70,7 +70,7 @@ class AutoFields(object):
                 # group
 
                 if self.autoGroups:
-                    group_name = schema.__name__
+                    group_name = schema.__name__ or prefix or None
                     
                     # Look for group - note that previous processFields
                     # may have changed the groups list, so we can't easily
